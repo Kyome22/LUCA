@@ -1,2 +1,3 @@
 # LUCA
-Command line tool to prepare the architecture.
+
+This is a tool to construct LUCA for Xcode project.
