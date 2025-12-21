@@ -12,10 +12,14 @@ public struct LUCABuilder {
     var organizationID: String
     var projectURL: URL
 
-    public init(name: String, organizationID: String, path: String) {
+    public init(name: String, organizationID: String, path: String?) {
         self.name = name.replacingOccurrences(of: "[ -/]", with: "_", options: .regularExpression)
         self.organizationID = organizationID
-        self.projectURL = URL(filePath: path)
+        self.projectURL = if let path {
+            URL(filePath: path)
+        } else {
+            URL(filePath: FileManager.default.currentDirectoryPath)
+        }
     }
 
     public func run() throws {

@@ -29,12 +29,11 @@ struct LUCA: ParsableCommand {
     var organizationID: String
 
     @Option(
-        wrappedValue: FileManager.default.currentDirectoryPath,
         name: .shortAndLong,
         help: "The path to the directory to create Xcode project.",
         completion: .directory,
     )
-    var path: String
+    var path: String?
 
     mutating func run() throws {
         try LUCABuilder(name: name, organizationID: organizationID, path: path).run()
