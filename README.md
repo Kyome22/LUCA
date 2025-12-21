@@ -4,12 +4,11 @@ This is a tool to construct LUCA for Xcode project.
 
 ## What is LUCA?
 
-[LUCA is a modern architecture for SwiftUI development](https://dev.to/kyome22/luca-a-modern-architecture-for-swiftui-development-3g2i).
+[LUCA is a modern architecture for SwiftUI development](https://dev.to/kyome22/luca-a-modern-architecture-for-swiftui-development-3g2i).  
 It is a practical architecture optimized for the SwiftUI × Observation era.
 
-|     |                          |                                        |
-| :-- | :----------------------- | -------------------------------------- |
 | L   | Layered                  | Clear 3-layer separation of concerns   |
+| :-- | :----------------------- | -------------------------------------- |
 | U   | Unidirectional Data Flow | Single-direction data flow             |
 | C   | Composable               | Composability and testability like TCA |
 | A   | Architecture             | Architecture                           |
