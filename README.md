@@ -73,7 +73,8 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 **Homebrew**
 
 ```sh
-
+brew tap kyome22/tap
+brew install luca
 ```
 
 **Swift Package Manager**
