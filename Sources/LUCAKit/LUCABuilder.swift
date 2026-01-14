@@ -44,7 +44,7 @@ public struct LUCABuilder {
     }
 
     func copyLocalPackage() throws {
-        guard let localPackageURL = Bundle.module.url(forResource: "LocalPackage", withExtension: nil) else {
+        guard let localPackageURL = ResourceBundle.bundle.url(forResource: "LocalPackage", withExtension: nil) else {
             throw LUCAError.resouceDoesNotFound(name: "LocalPackage")
         }
         let output = Shell.run("""
@@ -57,7 +57,7 @@ public struct LUCABuilder {
     }
 
     func copyApp() throws {
-        guard let appURL = Bundle.module.url(forResource: "App", withExtension: nil) else {
+        guard let appURL = ResourceBundle.bundle.url(forResource: "App", withExtension: nil) else {
             throw LUCAError.resouceDoesNotFound(name: "App")
         }
         let output = Shell.run("""
@@ -72,7 +72,7 @@ public struct LUCABuilder {
     }
 
     func generateXcodeProject() throws {
-        guard let projectYAMLURL = Bundle.module.url(forResource: "project", withExtension: "yml") else {
+        guard let projectYAMLURL = ResourceBundle.bundle.url(forResource: "project", withExtension: "yml") else {
             throw LUCAError.resouceDoesNotFound(name: "project.yml")
         }
         var projectYAML = try String(contentsOf: projectYAMLURL, encoding: .utf8)
