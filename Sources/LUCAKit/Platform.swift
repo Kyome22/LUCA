@@ -32,8 +32,8 @@ public enum Platform: String {
 
     var platformVersion: String {
         switch self {
-        case .iOS: ".iOS(.v26)"
-        case .macOS: ".macOS(.v26)"
+        case .iOS: ".iOS(.v17)"
+        case .macOS: ".macOS(.v14)"
         }
     }
 }
