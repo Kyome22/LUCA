@@ -9,11 +9,13 @@ import ArgumentParser
 import Foundation
 import LUCAKit
 
+extension Platform: ExpressibleByArgument {}
+
 struct LUCA: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "luca",
         abstract: "A tool to construct LUCA for Xcode project.",
-        version: "1.0.0"
+        version: "2.0.0"
     )
 
     @Option(
@@ -29,6 +31,12 @@ struct LUCA: ParsableCommand {
     var organizationID: String
 
     @Option(
+        name: .long,
+        help: "The target platform (iOS or macOS).",
+    )
+    var platform: Platform = .iOS
+
+    @Option(
         name: .shortAndLong,
         help: "The path to the directory to create Xcode project.",
         completion: .directory,
@@ -36,7 +44,7 @@ struct LUCA: ParsableCommand {
     var path: String?
 
     mutating func run() throws {
-        try LUCABuilder(name: name, organizationID: organizationID, path: path).run()
+        try LUCABuilder(name: name, organizationID: organizationID, platform: platform, path: path).run()
     }
 }
 

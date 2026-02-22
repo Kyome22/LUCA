@@ -1,0 +1,40 @@
+name: PROJECT_NAME
+options:
+  bundleIdPrefix: ORGANIZATION_IDENTIFIER
+settings:
+  base:
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+packages:
+  LocalPackage:
+    path: LocalPackage
+    group: ""
+targets:
+  PROJECT_NAME:
+    type: application
+    platform: macOS
+    sources: [PROJECT_NAME]
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: 1.0
+        CURRENT_PROJECT_VERSION: 1.0.0
+        ENABLE_PREVIEWS: YES
+        GENERATE_INFOPLIST_FILE: YES
+        STRING_CATALOG_GENERATE_SYMBOLS: YES
+        SWIFT_APPROACHABLE_CONCURRENCY: YES
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        SWIFT_EMIT_LOC_STRINGS: YES
+        SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY: YES
+        SWIFT_VERSION: 6.0
+    scheme:
+      commandLineArguments:
+        "ResetUserDefaults": false
+        "ShowAllData": false
+      testPlans:
+        - path: PROJECT_NAME/TestPlan.xctestplan
+          defaultPlan: true
+    dependencies:
+      - package: LocalPackage
+        product: UserInterface

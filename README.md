@@ -55,7 +55,8 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 │   └── Tests
 │       └── ModelTests
 │           ├── ServiceTests
-│           └── StoreTests
+│           ├── StoreTests
+│           └── TestStore.swift
 ├── ProjectName
 │   └── ProjectNameApp.swift
 └── ProjectName.xcodeproj
@@ -65,17 +66,17 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 
 [LUCA-Skills](https://github.com/kyome22/LUCA-Skills) provides [Claude Code](https://claude.ai/claude-code) skills for developing apps with LUCA.
 
-| Command | Description |
-| :--- | :--- |
+| Command       | Description                                                                      |
+| :------------ | :------------------------------------------------------------------------------- |
 | `/luca-setup` | Guides project scaffolding — installing prerequisites and running the `luca` CLI |
-| `/luca-arch` | Explains the LUCA architecture: layers, components, data flow, and patterns |
-| `/luca-impl` | Implements features across all three layers following LUCA coding rules |
-| `/luca-test` | Writes unit tests for Services and Stores using Swift Testing |
+| `/luca-arch`  | Explains the LUCA architecture: layers, components, data flow, and patterns      |
+| `/luca-impl`  | Implements features across all three layers following LUCA coding rules          |
+| `/luca-test`  | Writes unit tests for Services and Stores using Swift Testing                    |
 
 ## Requirements
 
 - Development with Xcode 26.0+
-- Compatible with iOS 26.0+
+- Compatible with iOS 26.0+ / macOS 26.0+
 - Written in Swift 6.2
 - This tool depends on [XcodeGen](https://github.com/yonaskolb/XcodeGen) 2.44.1+
 
@@ -99,13 +100,14 @@ swift run luca
 ## Usage
 
 ```sh
-luca --name <name> --organization-id <organization-id> [--path <path>]
+luca --name <name> --organization-id <organization-id> [--platform <platform>] [--path <path>]
 ```
 
 **Options**
 
-| Short | Long                | Explain                                                    |
-| :---- | :------------------ | :--------------------------------------------------------- |
-| `-n`  | `--name`            | Specify the project name.                                  |
-| `-o`  | `--organization-id` | Specify the organization identifier (e.g., com.company).   |
-| `-p`  | `--path`            | Specify the path to the directory to create Xcode project. |
+| Short | Long                | Explain                                                         |
+| :---- | :------------------ | :-------------------------------------------------------------- |
+| `-n`  | `--name`            | Specify the project name.                                       |
+| `-o`  | `--organization-id` | Specify the organization identifier (e.g., com.company).        |
+|       | `--platform`        | Specify the target platform (`iOS` or `macOS`). Default: `iOS`. |
+| `-p`  | `--path`            | Specify the path to the directory to create Xcode project.      |

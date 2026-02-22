@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "4731E8D6-BC7C-48DF-A5B8-38BD748D8246",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackage",
+        "identifier" : "ModelTests",
+        "name" : "ModelTests"
+      }
+    }
+  ],
+  "version" : 1
+}

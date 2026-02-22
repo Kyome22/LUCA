@@ -7,14 +7,49 @@
 
 import Foundation
 
+public enum Platform: String {
+    case iOS
+    case macOS
+
+    var projectYAMLName: String {
+        switch self {
+        case .iOS: "project-ios"
+        case .macOS: "project-macos"
+        }
+    }
+
+    var appTemplateName: String {
+        switch self {
+        case .iOS: "App-iOS"
+        case .macOS: "App-macOS"
+        }
+    }
+
+    var appDelegateName: String {
+        switch self {
+        case .iOS: "AppDelegate-iOS"
+        case .macOS: "AppDelegate-macOS"
+        }
+    }
+
+    var platformVersion: String {
+        switch self {
+        case .iOS: ".iOS(.v26)"
+        case .macOS: ".macOS(.v26)"
+        }
+    }
+}
+
 public struct LUCABuilder {
     var name: String
     var organizationID: String
+    var platform: Platform
     var projectURL: URL
 
-    public init(name: String, organizationID: String, path: String?) {
+    public init(name: String, organizationID: String, platform: Platform, path: String?) {
         self.name = name.replacingOccurrences(of: "[ -/]", with: "_", options: .regularExpression)
         self.organizationID = organizationID
+        self.platform = platform
         self.projectURL = if let path {
             URL(filePath: path)
         } else {
@@ -47,18 +82,35 @@ public struct LUCABuilder {
         guard let localPackageURL = ResourceBundle.bundle.url(forResource: "LocalPackage", withExtension: nil) else {
             throw LUCAError.resouceDoesNotFound(name: "LocalPackage")
         }
-        let output = Shell.run("""
+        guard let appDelegateURL = ResourceBundle.bundle.url(forResource: platform.appDelegateName, withExtension: "swift") else {
+            throw LUCAError.resouceDoesNotFound(name: platform.appDelegateName)
+        }
+        let destLocalPackageURL = projectURL.appending(path: "LocalPackage")
+        let destAppDelegateURL = destLocalPackageURL.appending(path: "Sources/Model/AppDelegate.swift")
+        let destPackageSwiftURL = destLocalPackageURL.appending(path: "Package.swift")
+
+        let copyOutput = Shell.run("""
             cd \(projectURL.path())
             cp -r \(localPackageURL.path()) ./LocalPackage
+            cp \(appDelegateURL.path()) \(destAppDelegateURL.path())
             """)
-        guard output.succeeded else {
+        guard copyOutput.succeeded else {
+            throw LUCAError.failedToCopyLocalPackage
+        }
+
+        var packageSwift = try String(contentsOf: destPackageSwiftURL, encoding: .utf8)
+        packageSwift = packageSwift.replacingOccurrences(of: "PLATFORM_VERSION", with: platform.platformVersion)
+        guard FileManager.default.createFile(
+            atPath: destPackageSwiftURL.path(),
+            contents: packageSwift.data(using: .utf8)
+        ) else {
             throw LUCAError.failedToCopyLocalPackage
         }
     }
 
     func copyApp() throws {
-        guard let appURL = ResourceBundle.bundle.url(forResource: "App", withExtension: nil) else {
-            throw LUCAError.resouceDoesNotFound(name: "App")
+        guard let appURL = ResourceBundle.bundle.url(forResource: platform.appTemplateName, withExtension: nil) else {
+            throw LUCAError.resouceDoesNotFound(name: platform.appTemplateName)
         }
         let output = Shell.run("""
             cd \(projectURL.path())
@@ -72,8 +124,8 @@ public struct LUCABuilder {
     }
 
     func generateXcodeProject() throws {
-        guard let projectYAMLURL = ResourceBundle.bundle.url(forResource: "project", withExtension: "yml") else {
-            throw LUCAError.resouceDoesNotFound(name: "project.yml")
+        guard let projectYAMLURL = ResourceBundle.bundle.url(forResource: platform.projectYAMLName, withExtension: "yml") else {
+            throw LUCAError.resouceDoesNotFound(name: "\(platform.projectYAMLName).yml")
         }
         var projectYAML = try String(contentsOf: projectYAMLURL, encoding: .utf8)
         projectYAML = projectYAML.replacingOccurrences(of: "PROJECT_NAME", with: name)
