@@ -24,9 +24,13 @@ let package = Package(
         .target(
             name: "LUCAKit",
             resources: [
-                .process("Resources/project.yml"),
+                .process("Resources/project-ios.yml"),
+                .process("Resources/project-macos.yml"),
+                .process("Resources/AppDelegate-iOS.swift"),
+                .process("Resources/AppDelegate-macOS.swift"),
                 .copy("Resources/LocalPackage"),
-                .copy("Resources/App"),
+                .copy("Resources/App-iOS"),
+                .copy("Resources/App-macOS"),
             ],
             swiftSettings: swiftSettings
         ),
