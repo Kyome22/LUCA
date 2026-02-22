@@ -61,6 +61,17 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 └── ProjectName.xcodeproj
 ```
 
+## Claude Code Skills
+
+[LUCA-Skills](https://github.com/kyome22/LUCA-Skills) provides [Claude Code](https://claude.ai/claude-code) skills for developing apps with LUCA.
+
+| Command | Description |
+| :--- | :--- |
+| `/luca-setup` | Guides project scaffolding — installing prerequisites and running the `luca` CLI |
+| `/luca-arch` | Explains the LUCA architecture: layers, components, data flow, and patterns |
+| `/luca-impl` | Implements features across all three layers following LUCA coding rules |
+| `/luca-test` | Writes unit tests for Services and Stores using Swift Testing |
+
 ## Requirements
 
 - Development with Xcode 26.0+
