@@ -8,8 +8,8 @@ DerivedData/
 
 # Swift Package Manager
 /*.xcodeproj
-/.build
-/.swiftpm
+.build/
+.swiftpm/
 Package.resolved
 
 # Test
