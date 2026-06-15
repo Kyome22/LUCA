@@ -15,7 +15,7 @@ struct LUCA: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "luca",
         abstract: "A tool to construct LUCA for Xcode project.",
-        version: "2.2.0"
+        version: "3.0.0"
     )
 
     @Option(
