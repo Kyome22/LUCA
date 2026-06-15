@@ -36,7 +36,8 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 │   │   │   ├── Dependencies
 │   │   │   │   └── AppStateClient.swift
 │   │   │   ├── Entities
-│   │   │   │   └── AppState.swift
+│   │   │   │   ├── AppState.swift
+│   │   │   │   └── AsyncStreamBundle.swift
 │   │   │   ├── Extensions
 │   │   │   ├── Repositories
 │   │   │   └── DependencyClient.swift
@@ -56,7 +57,8 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 │       └── ModelTests
 │           ├── ServiceTests
 │           ├── StoreTests
-│           └── TestStore.swift
+│           ├── TestStore.swift
+│           └── WaitUntil.swift
 ├── ProjectName
 │   └── ProjectNameApp.swift
 └── ProjectName.xcodeproj
@@ -76,7 +78,7 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 ## Requirements
 
 - Development with Xcode 26.0+
-- Compatible with iOS 17.0+ / macOS 14.0+
+- Compatible with iOS 18.0+ / macOS 15.0+
 - Written in Swift 6.2
 - This tool depends on [XcodeGen](https://github.com/yonaskolb/XcodeGen) 2.44.1+
 

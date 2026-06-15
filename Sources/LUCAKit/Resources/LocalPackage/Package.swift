@@ -27,12 +27,14 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.1.4"),
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.8.0"),
     ],
     targets: [
         .target(
             name: "DataSource",
             dependencies: [
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Logging", package: "swift-log"),
             ],
             swiftSettings: swiftSettings

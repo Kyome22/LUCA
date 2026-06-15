@@ -12,7 +12,7 @@ targets:
   PROJECT_NAME:
     type: application
     platform: iOS
-    deploymentTarget: "17.0"
+    deploymentTarget: "18.0"
     sources: [PROJECT_NAME]
     settings:
       base:

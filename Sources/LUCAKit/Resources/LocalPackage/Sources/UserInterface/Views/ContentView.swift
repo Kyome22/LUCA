@@ -17,6 +17,9 @@ struct ContentView: View {
                     Button("Add") {
                         Task { await store.send(.plusButtonTapped) }
                     }
+                    Button("Reset") {
+                        Task { await store.send(.resetButtonTapped) }
+                    }
                 }
                 Toggle(isOn: Binding<Bool>(
                     get: { store.isEnabled },
@@ -30,6 +33,9 @@ struct ContentView: View {
         }
         .task {
             await store.send(.task(String(describing: Self.self)))
+        }
+        .onDisappear {
+            Task { await store.send(.onDisappear) }
         }
     }
 }

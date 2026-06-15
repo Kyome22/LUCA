@@ -12,7 +12,7 @@ targets:
   PROJECT_NAME:
     type: application
     platform: macOS
-    deploymentTarget: "14.0"
+    deploymentTarget: "15.0"
     sources: [PROJECT_NAME]
     settings:
       base:
