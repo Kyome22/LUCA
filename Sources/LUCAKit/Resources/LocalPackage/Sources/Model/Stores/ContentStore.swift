@@ -38,7 +38,7 @@ public final class ContentStore: Composable {
 
     public func reduce(_ action: Action) async {
         switch action {
-        case let .task(screenName):
+        case let .viewAppeared(screenName):
             logService.notice(.screenView(name: screenName))
             appName = appStateClient.withLock(\.name)
             appVersion = appStateClient.withLock(\.version)
@@ -64,17 +64,17 @@ public final class ContentStore: Composable {
             self.isEnabled = isEnabled
             userDefaultsRepository.isEnabled = isEnabled
 
-        case .onDisappear:
+        case .viewDisappeared:
             task?.cancel()
             task = nil
         }
     }
 
     public enum Action: Sendable {
-        case task(String)
+        case viewAppeared(String)
         case plusButtonTapped
         case resetButtonTapped
         case isEnabledToggleSwitched(Bool)
-        case onDisappear
+        case viewDisappeared
     }
 }
