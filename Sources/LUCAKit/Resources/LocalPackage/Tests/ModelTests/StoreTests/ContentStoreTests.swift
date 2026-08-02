@@ -6,7 +6,7 @@ import Testing
 
 struct ContentStoreTests {
     @MainActor @Test
-    func send_task() async throws {
+    func send_viewAppeared() async throws {
         let appState = OSAllocatedUnfairLock<AppState>(initialState: .init(name: "test", version: "0.0.0"))
         let sut = ContentStore(.testDependencies(
             appStateClient: .testDependency(appState),
@@ -17,7 +17,7 @@ struct ContentStoreTests {
                 }
             }
         ))
-        await sut.send(.task("Test"))
+        await sut.send(.viewAppeared("Test"))
         #expect(sut.appName == "test")
         #expect(sut.appVersion == "0.0.0")
         #expect(sut.isEnabled)
@@ -27,22 +27,22 @@ struct ContentStoreTests {
     func send_plusButtonTapped() async throws {
         let appState = OSAllocatedUnfairLock<AppState>(initialState: .init())
         let sut = ContentStore(.testDependencies(appStateClient: .testDependency(appState)))
-        await sut.send(.task("Test"))
+        await sut.send(.viewAppeared("Test"))
         await sut.send(.plusButtonTapped)
         await waitUntil { sut.count == 1 }
         #expect(sut.count == 1)
-        await sut.send(.onDisappear)
+        await sut.send(.viewDisappeared)
     }
 
     @MainActor @Test
     func observes_count_stream() async throws {
         let appState = OSAllocatedUnfairLock<AppState>(initialState: .init())
         let sut = ContentStore(.testDependencies(appStateClient: .testDependency(appState)))
-        await sut.send(.task("Test"))
+        await sut.send(.viewAppeared("Test"))
         appState.withLock { $0.count.send(5) }
         await waitUntil { sut.count == 5 }
         #expect(sut.count == 5)
-        await sut.send(.onDisappear)
+        await sut.send(.viewDisappeared)
     }
 
     @MainActor @Test
