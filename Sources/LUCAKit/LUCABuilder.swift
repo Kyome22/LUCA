@@ -6,6 +6,10 @@
 */
 
 import Foundation
+import PathKit
+import ProjectSpec
+import Version
+import XcodeGenKit
 
 public struct LUCABuilder {
     var name: String
@@ -26,7 +30,6 @@ public struct LUCABuilder {
 
     public func run() throws {
         try checkDirectoryExistence()
-        try checkXcodegenExistence()
         try copyLocalPackage()
         try copyApp()
         try generateXcodeProject()
@@ -35,13 +38,6 @@ public struct LUCABuilder {
     func checkDirectoryExistence() throws {
         guard FileManager.default.fileExists(atPath: projectURL.path()) else {
             throw LUCAError.directoryDoesNotExist(path: projectURL.path())
-        }
-    }
-
-    func checkXcodegenExistence() throws {
-        let output = Shell.run("xcodegen --version >/dev/null 2>&1")
-        guard output.succeeded else {
-            throw LUCAError.xcodegenDoesNotExist
         }
     }
 
@@ -106,18 +102,17 @@ public struct LUCABuilder {
         var projectYAML = try String(contentsOf: projectYAMLURL, encoding: .utf8)
         projectYAML = projectYAML.replacingOccurrences(of: "PROJECT_NAME", with: name)
         projectYAML = projectYAML.replacingOccurrences(of: "ORGANIZATION_IDENTIFIER", with: organizationID)
-        FileManager.default.createFile(
-            atPath: projectURL.appending(path: "project.yml").path(),
-            contents: projectYAML.data(using: .utf8)
-        )
-        let output = Shell.run("""
-            cd \(projectURL.path())
-            xcodegen generate
-            rm project.yml
-            """)
-        guard output.succeeded else {
-            output.printError()
-            throw LUCAError.failedToGenerateXcodeProject
-        }
+        let projectDirectoryPath = Path(projectURL.path(percentEncoded: false))
+        let projectYAMLPath = projectDirectoryPath + "project.yml"
+        try projectYAMLPath.write(projectYAML)
+        defer { try? projectYAMLPath.delete() }
+
+        let project = try SpecLoader(version: Version(2, 46, 0)).loadProject(path: projectYAMLPath)
+        try project.validate()
+        let fileWriter = FileWriter(project: project)
+        try fileWriter.writePlists()
+        let userName = ProcessInfo.processInfo.environment["USER"] ?? NSUserName()
+        let xcodeProject = try ProjectGenerator(project: project).generateXcodeProject(in: projectDirectoryPath, userName: userName)
+        try fileWriter.writeXcodeProject(xcodeProject, to: projectDirectoryPath + "\(project.name).xcodeproj")
     }
 }

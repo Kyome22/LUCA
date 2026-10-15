@@ -51,8 +51,4 @@ struct ShellOutput {
     func printOutput() {
         outputs.forEach { print($0) }
     }
-
-    func printError() {
-        errors.forEach { print($0) }
-    }
 }
