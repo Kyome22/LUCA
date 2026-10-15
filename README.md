@@ -80,7 +80,7 @@ It is a practical architecture optimized for the SwiftUI × Observation era.
 - Development with Xcode 26.0+
 - Compatible with iOS 18.0+ / macOS 15.0+
 - Written in Swift 6.2
-- This tool depends on [XcodeGen](https://github.com/yonaskolb/XcodeGen) 2.44.1+
+- Xcode projects are generated with the bundled [XcodeGen](https://github.com/yonaskolb/XcodeGen), so no separate installation is required
 
 ## Installation
 

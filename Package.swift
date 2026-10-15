@@ -19,10 +19,15 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", exact: "1.6.2"),
+        .package(url: "https://github.com/yonaskolb/XcodeGen.git", exact: "2.46.0"),
     ],
     targets: [
         .target(
             name: "LUCAKit",
+            dependencies: [
+                .product(name: "XcodeGenKit", package: "XcodeGen"),
+                .product(name: "ProjectSpec", package: "XcodeGen"),
+            ],
             resources: [
                 .process("Resources/project-ios.yml"),
                 .process("Resources/project-macos.yml"),
