@@ -26,8 +26,8 @@ let package = Package(
             resources: [
                 .process("Resources/project-ios.yml"),
                 .process("Resources/project-macos.yml"),
-                .process("Resources/AppDelegate-iOS.swift"),
-                .process("Resources/AppDelegate-macOS.swift"),
+                .copy("Resources/AppDelegate-iOS.swift"),
+                .copy("Resources/AppDelegate-macOS.swift"),
                 .copy("Resources/LocalPackage"),
                 .copy("Resources/App-iOS"),
                 .copy("Resources/App-macOS"),
