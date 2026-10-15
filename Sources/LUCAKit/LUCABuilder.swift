@@ -83,9 +83,18 @@ public struct LUCABuilder {
             cd \(projectURL.path())
             cp -r \(appURL.path()) ./\(name)
             mv \(name)/PROJECT_NAME.swift \(name)/\(name)App.swift
-            sed -r "s/PROJECT_NAME/\(name)/g" \(name)/\(name)App.swift
             """)
         guard output.succeeded else {
+            throw LUCAError.failedToCopyApp
+        }
+
+        let destAppSwiftURL = projectURL.appending(path: "\(name)/\(name)App.swift")
+        var appSwift = try String(contentsOf: destAppSwiftURL, encoding: .utf8)
+        appSwift = appSwift.replacingOccurrences(of: "PROJECT_NAME", with: name)
+        guard FileManager.default.createFile(
+            atPath: destAppSwiftURL.path(),
+            contents: appSwift.data(using: .utf8)
+        ) else {
             throw LUCAError.failedToCopyApp
         }
     }
